@@ -67,11 +67,11 @@
 <pre><code>isinstance(s, basestring)</code></pre>
 
 ### 文当读取
+
 1. txt文档
     txt默认采用ascii码，另存为需要指定其他编码才行。
 2. 读取非ascii码文件
     如果读取非 ASCII 编码的文本文件，可以用二进制模式打开，再解码；或者给 open 函数传入 encoing 参数
-
 <pre><code>
     # GBK 编码的文件
     f = open('./xx.txt', 'rb') # 二进制读取
@@ -83,15 +83,13 @@
     f.read()
 </code></pre>
 
-    遇到编码不规范的文件，可以给 open 函数一个 errors 的参数
-
 <pre><code>
+    # 遇到编码不规范的文件，可以给 open 函数一个 errors 的参数
     f = open('/./xx.txt', 'r', encoding='gbk', errors='ignore') # 忽略错误编码
 </code></pre>
 
 3. codecs
-    python 的 codecs 模块可以帮助我们在读取文件时自动转换编码，直接读出 Unicode
-
+python 的 codecs 模块可以帮助我们在读取文件时自动转换编码，直接读出 Unicode
 <pre><code>
     # GBK 编码的文件
     import codecs
@@ -100,9 +98,7 @@
 </code></pre>
 
 4. JSON
-    我们可以将一些需要调取的 dict 存储为 JSON。
-    另外一个原因，JSON 标准规定编码是 UTF-8，所以 Python 内置的 json 模块让我们很方便地在 Python 的 str 与 JSON 字符串之间转换
-
+我们可以将一些需要调取的 dict 存储为 JSON。另外一个原因，JSON 标准规定编码是 UTF-8，所以 Python 内置的 json 模块让我们很方便地在 Python 的 str 与 JSON 字符串之间转换
 <PRE><CODE>
 import json
 d = dict(name='Bob', age=20, score=88)
@@ -112,10 +108,11 @@ json_str = '{"age": 20, "score": 88, "name": "Bob"}'
 json.loads(json_str) # 成功读取
 {u'age': 20, u'name': u'Bob', u'score': 88}
 </CODE></PRE>
-    实际操作中，可以直接将 json.dumps(d) 写入 txt 文档，读取时 json.loads(f.read()) 即可
+
+       实际操作中，可以直接将 json.dumps(d) 写入 txt 文档，读取时 json.loads(f.read()) 即可
 
 5. 直接存储 Unicode
-    不将 Unicode 转为实际的文本存储字符集，而是将 Unicode 的内存编码值直接存储，读取文件时再反向转换回来
+不将 Unicode 转为实际的文本存储字符集，而是将 Unicode 的内存编码值直接存储，读取文件时再反向转换回来
 <PRE><CODE>
 # 存储
 # 从 Unicode 到 Unicode-escape
@@ -132,8 +129,7 @@ print(u'\u4e2d\u6587')</CODE></PRE>
 6. 直接存储 String
 
 <PRE><CODE>
-    对于 UTF-8 编码的字符串，在存储时也可以直接存储编码值
-
+# 对于 UTF-8 编码的字符串，在存储时也可以直接存储编码值
 # 存储
 # 从 UTF-8 到 string-escape
 # utf8str.encode('string-escape')
