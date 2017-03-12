@@ -28,38 +28,38 @@
 
 ## encode() decode()
     他们转换的本质是Unicode和str互相转换。encode将Unicode转换为str，并使用encoding编码。decode将str转换为Unicode，其中str是以coding编码。
-    <pre><code>
-        #encoding: utf-8
-        s = "你好" # 整个文件是UTF-8编码，所以这里的字符串也是UTF-8
-        u = s.decode("utf-8") # 将utf-8的str转换为unicode
-        g = u.encode('GBK') # 将unicode转换为str，编码为GBK
-        print type(s), "len=", len(s)
-        # 输出： len= 6，utf-8每个汉字占3字节
-        print type(u), "len=", len(u)
-        # 输出： len= 6，unicode统计的是字数
-        print type(g), "len=", len(g)
-        # 输出：g = u.encode('GBK')，GBK每个汉字占2字节
-        print s
-        # 在GBK/ANSI环境下（如Windows），输出乱码，
-        #因为此时屏幕输出会被强制理解为GBK；Linux下显示正常
-        print g
-        # 在Windows下输出“你好”，
-        #Linux(UTF-8环境)下报错，原因同上。
-    </pre></code>
+
+<pre><code>
+    #encoding: utf-8
+    s = "你好" # 整个文件是UTF-8编码，所以这里的字符串也是UTF-8
+    u = s.decode("utf-8") # 将utf-8的str转换为unicode
+    g = u.encode('GBK') # 将unicode转换为str，编码为GBK
+    print type(s), "len=", len(s)
+    # 输出： len= 6，utf-8每个汉字占3字节
+    print type(u), "len=", len(u)
+    # 输出： len= 6，unicode统计的是字数
+    print type(g), "len=", len(g)
+    # 输出：g = u.encode('GBK')，GBK每个汉字占2字节
+    print s
+    # 在GBK/ANSI环境下（如Windows），输出乱码，
+    #因为此时屏幕输出会被强制理解为GBK；Linux下显示正常
+    print g
+</pre></code>
 
 1. 循环处理字符串时需要解码
+
 <pre><code>
-#-*- coding: utf-8 -*-
+    #-*- coding: utf-8 -*-
+    token = "，.!?？：:"
 
-token = "，.!?？：:"
-
-# 不解码会乱码
-for t in token:
-    print t
-# 解码
-for t in token.decode('utf-8'):
-    print t
+    # 不解码会乱码
+    for t in token:
+        print t
+    # 解码
+    for t in token.decode('utf-8'):
+        print t
 </code></pre>
+
 2. 字符匹配的时候需要解码
 3. jieba分词之后变为Unicode编码
 
@@ -82,13 +82,16 @@ for t in token.decode('utf-8'):
     f = open('/./xx.txt', 'r', encoding='gbk')
     f.read()
 </code></pre>
+
 遇到编码不规范的文件，可以给 open 函数一个 errors 的参数
+
 <pre><code>
     f = open('/./xx.txt', 'r', encoding='gbk', errors='ignore') # 忽略错误编码
 </code></pre>
 
 3. codecs
 python 的 codecs 模块可以帮助我们在读取文件时自动转换编码，直接读出 Unicode
+
 <pre><code>
     # GBK 编码的文件
     import codecs
@@ -113,7 +116,8 @@ json.loads(json_str) # 成功读取
 
 5. 直接存储 Unicode
     不将 Unicode 转为实际的文本存储字符集，而是将 Unicode 的内存编码值直接存储，读取文件时再反向转换回来
-<PRE><CODE># 存储
+<PRE><CODE>
+# 存储
 # 从 Unicode 到 Unicode-escape
 # unicodestr.encode('unicode-escape')
 u'中文'.encode('unicode-escape')
@@ -126,6 +130,7 @@ u'\u4e2d\u6587'
 print(u'\u4e2d\u6587')</CODE></PRE>
 
 6. 直接存储 String
+
 <PRE><CODE>
     对于 UTF-8 编码的字符串，在存储时也可以直接存储编码值
 
@@ -140,6 +145,7 @@ print(u'\u4e2d\u6587')</CODE></PRE>
 '\\xe4\\xb8\\xad\\xe6\\x96\\x87'.decode('string-escape')# 注意 string '中文' 是 UTF-8
 '\xe4\xb8\xad\xe6\x96\x87'
 </CODE></PRE>
+
 ### 总结
 
 1. unicode是支持所有文字的统一编码，但一般只用作文字的内部表示，文件、网页（也是文件）、屏幕输入输出等处均需使用具体的外在编码，如GBK、UTF-8等；
