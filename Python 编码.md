@@ -83,14 +83,14 @@
     f.read()
 </code></pre>
 
-遇到编码不规范的文件，可以给 open 函数一个 errors 的参数
+    遇到编码不规范的文件，可以给 open 函数一个 errors 的参数
 
 <pre><code>
     f = open('/./xx.txt', 'r', encoding='gbk', errors='ignore') # 忽略错误编码
 </code></pre>
 
 3. codecs
-python 的 codecs 模块可以帮助我们在读取文件时自动转换编码，直接读出 Unicode
+    python 的 codecs 模块可以帮助我们在读取文件时自动转换编码，直接读出 Unicode
 
 <pre><code>
     # GBK 编码的文件
@@ -112,7 +112,7 @@ json_str = '{"age": 20, "score": 88, "name": "Bob"}'
 json.loads(json_str) # 成功读取
 {u'age': 20, u'name': u'Bob', u'score': 88}
 </CODE></PRE>
-实际操作中，可以直接将 json.dumps(d) 写入 txt 文档，读取时 json.loads(f.read()) 即可
+    实际操作中，可以直接将 json.dumps(d) 写入 txt 文档，读取时 json.loads(f.read()) 即可
 
 5. 直接存储 Unicode
     不将 Unicode 转为实际的文本存储字符集，而是将 Unicode 的内存编码值直接存储，读取文件时再反向转换回来
